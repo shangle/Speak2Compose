@@ -201,6 +201,15 @@ You can chain multiple commands using the word "AND" or "THEN".
         </div>
     </div>
 
+    <!-- Fallback Clippy UI -->
+    <div id="clippy-container" style="position: fixed; right: 20px; bottom: 60px; z-index: 9999; display: flex; align-items: flex-end; gap: 10px;">
+        <div id="clippy-bubble" class="clippy-balloon" style="display: none; position: relative; max-width: 200px; padding: 8px 12px; border: 2px solid black; background: #ffffcc; font-size: 12px; font-family: 'Courier Prime', monospace; box-shadow: 2px 2px 0px rgba(0,0,0,0.5);">
+            <div id="clippy-text"></div>
+        </div>
+        <div id="clippy-fallback-avatar" onclick="toggleSpeechListening()" style="width: 64px; height: 64px; background-image: url('data:image/svg+xml;utf8,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 64 64&quot;><rect width=&quot;64&quot; height=&quot;64&quot; fill=&quot;none&quot;/><path d=&quot;M24,16 L40,16 L40,48 L24,48 Z&quot; fill=&quot;%23c0c0c0&quot; stroke=&quot;black&quot; stroke-width=&quot;2&quot;/><circle cx=&quot;32&quot; cy=&quot;24&quot; r=&quot;4&quot; fill=&quot;black&quot;/><path d=&quot;M28,36 Q32,40 36,36&quot; fill=&quot;none&quot; stroke=&quot;black&quot; stroke-width=&quot;2&quot;/></svg>'); background-size: contain; background-repeat: no-repeat; cursor: pointer;" title="Clippy Fallback (Click to Speak)">
+        </div>
+    </div>
+
     <!-- Script Entrypoint -->
     <script src="app.js"></script>
 </body>

@@ -100,16 +100,28 @@ function toggleWebamp() {
         btn.classList.add('active');
         showClippySpeech("Webamp is running. Use Webamp's Play/Stop buttons to run the synthesizer!");
         
-        // Sync Playback events so Webamp Controls the Sound!
-        webamp.onPlay(() => {
-            executeMusicCode();
-        });
-        webamp.onPause(() => {
-            stopMusicEngine();
-        });
-        webamp.onStop(() => {
-            stopMusicEngine();
-        });
+        // Sync Playback events so Webamp Controls the Sound via state polling
+        let lastStatus = "STOPPED";
+        const webampInterval = setInterval(() => {
+            if (!webamp || !webampRendered) {
+                clearInterval(webampInterval);
+                return;
+            }
+            try {
+                const currentStatus = webamp.getMediaStatus();
+                if (currentStatus !== lastStatus) {
+                    console.log(`[Webamp Sync] Status changed: ${lastStatus} -> ${currentStatus}`);
+                    lastStatus = currentStatus;
+                    if (currentStatus === "PLAYING") {
+                        executeMusicCode();
+                    } else if (currentStatus === "PAUSED" || currentStatus === "STOPPED") {
+                        stopMusicEngine();
+                    }
+                }
+            } catch (e) {
+                console.error("Error polling Webamp status:", e);
+            }
+        }, 250);
     }).catch(err => {
         console.error("Webamp failed to load:", err);
     });
@@ -132,11 +144,13 @@ $(window).on('load', () => {
 
 function initClippyAgent() {
     if (window.clippy) {
+        window.clippy.BASE_PATH = 'https://cdn.jsdelivr.net/gh/smore-inc/clippy.js@master/agents/';
         window.clippy.load('Clippy', function(agent) {
             clippyAgent = agent;
             agent.show();
             // Hide the default static fallback clippy container
-            document.getElementById('clippy-container').style.display = 'none';
+            const fallback = document.getElementById('clippy-container');
+            if (fallback) fallback.style.display = 'none';
             
             // Relocate Clippy to bottom right
             agent.moveTo($(window).width() - 160, $(window).height() - 160);
@@ -148,7 +162,11 @@ function initClippyAgent() {
             });
 
             agent.speak("Welcome to Speak2Compose! Click me and say your commands to start coding.");
-        }, null, 'https://cdn.jsdelivr.net/gh/smore-inc/clippy.js@master/src/agents/');
+        }, function(jqXHR, textStatus, errorThrown) {
+            console.warn("Real Clippy failed to load from CDN. Status:", jqXHR ? jqXHR.status : 'N/A', "Error:", errorThrown);
+            const fallback = document.getElementById('clippy-container');
+            if (fallback) fallback.style.display = 'flex';
+        }, 'https://cdn.jsdelivr.net/gh/smore-inc/clippy.js@master/agents/');
     }
 }
 
@@ -159,9 +177,13 @@ function showClippySpeech(text) {
         // Fallback UI
         const bubble = document.getElementById('clippy-bubble');
         const bubbleText = document.getElementById('clippy-text');
-        bubbleText.innerText = text;
-        bubble.style.display = 'block';
-        setTimeout(() => { bubble.style.display = 'none'; }, 6000);
+        if (bubbleText && bubble) {
+            bubbleText.innerText = text;
+            bubble.style.display = 'block';
+            setTimeout(() => { bubble.style.display = 'none'; }, 6000);
+        } else {
+            console.log("Clippy Speech Fallback:", text);
+        }
     }
 }
 
@@ -845,3 +867,18 @@ function runDiagnosticTestSuite() {
         clippyAgent.play('Congratulations');
     }
 }
+
+// Expose state API for automated E2E testing
+window.Speak2Compose = {
+    getIsPlaying: () => isPlaying,
+    getAudioContext: () => audioContext,
+    getMixerChannels: () => MixerChannels,
+    getGenrePacks: () => GenrePacks,
+    getTempo: () => tempo,
+    getWebamp: () => webamp,
+    getWebampRendered: () => webampRendered,
+    executeMusicCode: () => executeMusicCode(),
+    stopMusicEngine: () => stopMusicEngine(),
+    processChainedCommands: (cmd) => processChainedCommands(cmd),
+    toggleWebamp: () => toggleWebamp()
+};

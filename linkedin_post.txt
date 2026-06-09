@@ -1,6 +1,6 @@
 🚀 Building a Speech-to-Music App in 36 Minutes (With Zero Code)
 
-Last night, I wanted to build a music live-coding environment for my son, Michael, to help him learn music production. He is a sophomore in high school, and I wanted him to be able to compose beats and melodies simply by speaking naturally to a computer: "Give me a bass drum," "Add a snare," "Make it faster."
+Last night, I wanted to build an intuitive music live-coding environment to help novices learn music production. I wanted users to be able to compose beats and melodies simply by speaking naturally to a computer: "Give me a bass drum," "Add a snare," "Make it faster."
 
 Here is the kicker: I did ZERO programming. 
 
@@ -22,6 +22,6 @@ What was built:
 
 If you are still looking at AI assistants as just advanced search bars to ask questions, you are missing out on the next computing revolution. We are transitioning from "learning how to write code" to "learning how to guide systems in plain English."
 
-Michael has his new synthesizer ready to go this morning. What are you building today? 💻🎹
+We have the new synthesizer workstation ready to go this morning. What are you building today? 💻🎹
 
 #GenerativeAI #WebAudio #EdTech #SoftwareDevelopment #NoCode #Productivity #RetroComputing
