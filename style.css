@@ -471,3 +471,8 @@ body {
     background-color: #ffffcc !important;
     color: #000000 !important;
 }
+
+/* Force Webamp player and its wrapper overlays to float on top of active windows */
+#webamp, .webamp, #webamp-container {
+    z-index: 99999 !important;
+}

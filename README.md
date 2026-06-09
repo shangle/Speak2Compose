@@ -13,12 +13,12 @@
  
    RELEASE.DATE ...: 06/09/2026         *  OS TYPE ........: WINDOWS 98 / ALL
    RELEASE.TYPE ...: LOCAL SYNTH        *  PROTECTION .....: CRIPPLED CLIPPY
-   RELEASE.FORMAT ..: WEB-BASED HTML5   *  DEVELOPER ......: MICHAEL & PAPA
+   RELEASE.FORMAT ..: WEB-BASED HTML5   *  DEVELOPER ......: TEAM SHANGLE
 
  *****************************************************************************
  *                          -  RELEASE DETAILS  -                            *
  *****************************************************************************
-   Michael and his Papa bring you the ultimate offline live-coding synth
+   Speak2Compose brings you the ultimate offline live-coding synth
    workstation! Driven by local HTML5 speech recognition, it generates 12
    voices of synthesizer code inside a simulated DOS QBasic editor, fully 
    integrated with a real Webamp module and a helpful animated Clippy agent.

@@ -9,47 +9,59 @@
     <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Space Grotesk', 'sans-serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
                         display: ['Outfit', 'sans-serif'],
                     },
                     colors: {
                         neonGreen: '#39ff14',
-                        neonBlue: '#04d9ff',
-                        darkBg: '#0b0c10',
-                        slateCard: '#1f2833',
+                        neonBlue: '#00e5ff',
+                        darkBg: '#08090c',
+                        glassBg: 'rgba(25, 28, 36, 0.65)',
+                        borderHighlight: 'rgba(255, 255, 255, 0.08)'
                     }
                 }
             }
         }
     </script>
     <style>
-        .neon-glow {
-            text-shadow: 0 0 10px rgba(57, 255, 20, 0.6), 0 0 20px rgba(57, 255, 20, 0.4);
+        body {
+            background-color: #08090c;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 32px 32px;
         }
-        .blue-glow {
-            text-shadow: 0 0 10px rgba(4, 217, 255, 0.6), 0 0 20px rgba(4, 217, 255, 0.4);
+        .glass-card {
+            background: rgba(25, 28, 36, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+        .glow-green {
+            box-shadow: 0 0 30px rgba(57, 255, 20, 0.15);
+        }
+        .glow-blue {
+            box-shadow: 0 0 30px rgba(0, 229, 255, 0.15);
         }
     </style>
 </head>
-<body class="bg-darkBg text-white font-sans selection:bg-neonGreen selection:text-black">
+<body class="text-white font-sans antialiased selection:bg-neonGreen selection:text-black">
 
     <!-- Navbar -->
-    <nav class="border-b border-gray-800 bg-darkBg/80 backdrop-blur-md sticky top-0 z-50">
+    <nav class="border-b border-white/5 bg-darkBg/80 backdrop-blur-md sticky top-0 z-50">
         <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
             <a href="#" class="flex items-center gap-2 font-display font-bold text-xl tracking-wider text-neonGreen">
                 <i class="ph-bold ph-waveform"></i> SPEAK2COMPOSE
             </a>
             <div class="flex items-center gap-6">
-                <a href="#inspiration" class="hover:text-neonBlue transition-colors font-medium">Inspiration</a>
-                <a href="#documentation" class="hover:text-neonBlue transition-colors font-medium">Documentation</a>
+                <a href="#inspiration" class="hover:text-neonBlue transition-colors font-medium text-sm">Design Philosophy</a>
+                <a href="#documentation" class="hover:text-neonBlue transition-colors font-medium text-sm">Documentation</a>
                 <a href="https://github.com/shangle/Speak2Compose" class="hover:text-neonGreen transition-colors text-2xl" target="_blank"><i class="ph ph-github-logo"></i></a>
-                <a href="app.html" class="bg-neonGreen text-black hover:bg-green-400 px-5 py-2 font-bold transition-all transform hover:scale-105 shadow-[0_0_15px_rgba(57,255,20,0.4)]">
+                <a href="app.html" class="bg-neonGreen text-black hover:bg-green-400 px-5 py-2 text-sm font-bold transition-all duration-300 transform hover:scale-105 rounded shadow-[0_0_20px_rgba(57,255,20,0.3)]">
                     Launch App
                 </a>
             </div>
@@ -57,24 +69,24 @@
     </nav>
 
     <!-- Hero Section -->
-    <header class="py-24 px-6 relative overflow-hidden">
-        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(4,217,255,0.15),transparent_60%)]"></div>
+    <header class="py-28 px-6 relative overflow-hidden">
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-neonBlue/10 rounded-full blur-[120px] pointer-events-none"></div>
         <div class="max-w-4xl mx-auto text-center relative z-10">
-            <span class="inline-flex items-center gap-1.5 px-3 py-1 mb-6 border border-neonGreen text-neonGreen rounded-full text-sm font-semibold uppercase tracking-widest bg-neonGreen/10">
-                <i class="ph-bold ph-sparkle"></i> Zero-Code Live Music Coding
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 mb-6 border border-neonGreen/30 text-neonGreen rounded-full text-xs font-semibold uppercase tracking-widest bg-neonGreen/10">
+                <i class="ph-bold ph-sparkle"></i> Serverless Live Music Compiler
             </span>
             <h1 class="text-5xl md:text-7xl font-display font-bold mb-8 leading-tight tracking-tight">
-                Conduct Music Live <br>
-                <span class="text-neonBlue blue-glow">Just by Speaking</span>
+                Conduct Electronic Music <br>
+                <span class="bg-gradient-to-r from-neonGreen to-neonBlue bg-clip-text text-transparent">Simply by Speaking</span>
             </h1>
-            <p class="text-xl text-gray-400 mb-12 max-w-2xl mx-auto font-light leading-relaxed">
-                An offline, conversational voice-synthesizer styled in a nostalgic Windows 98 desktop environment. Speak commands to generate clean, copy-pasteable Strudel live-coding patterns.
+            <p class="text-lg text-gray-400 mb-12 max-w-2xl mx-auto font-light leading-relaxed">
+                A localized, interactive speech-to-music live coder embedded inside a nostalgic Windows 98 SE dashboard. Convert conversational commands into valid, production-ready Strudel scripts.
             </p>
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
-                <a href="app.html" class="w-full sm:w-auto bg-neonGreen text-black hover:bg-green-400 px-8 py-4 font-bold text-lg transition-all shadow-[0_0_20px_rgba(57,255,20,0.5)]">
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="app.html" class="w-full sm:w-auto bg-neonGreen text-black hover:bg-green-400 px-8 py-4 font-bold rounded transition-all duration-300 shadow-[0_0_25px_rgba(57,255,20,0.4)]">
                     Launch Web Terminal
                 </a>
-                <a href="#documentation" class="w-full sm:w-auto border border-gray-600 hover:border-white px-8 py-4 font-bold text-lg transition-all">
+                <a href="#documentation" class="w-full sm:w-auto border border-white/10 hover:border-white px-8 py-4 font-bold rounded transition-all duration-300 bg-white/5 hover:bg-white/10">
                     View Spellbook
                 </a>
             </div>
@@ -82,18 +94,18 @@
     </header>
 
     <!-- App Mockup Preview -->
-    <section class="pb-20 px-6">
-        <div class="max-w-5xl mx-auto border-2 border-gray-800 rounded-lg p-3 bg-slateCard/40 shadow-2xl relative">
-            <div class="flex items-center gap-1.5 pb-3 border-b border-gray-800 mb-3">
-                <span class="w-3 h-3 rounded-full bg-red-500"></span>
-                <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
-                <span class="w-3 h-3 rounded-full bg-green-500"></span>
-                <span class="text-xs text-gray-500 font-mono ml-2">Speak2Compose Workstation (win98se)</span>
+    <section class="pb-28 px-6">
+        <div class="max-w-5xl mx-auto border border-white/10 rounded-xl p-3 bg-glassBg shadow-2xl relative glow-blue">
+            <div class="flex items-center gap-1.5 pb-3 border-b border-white/5 mb-3">
+                <span class="w-3 h-3 rounded-full bg-red-500/80"></span>
+                <span class="w-3 h-3 rounded-full bg-yellow-500/80"></span>
+                <span class="w-3 h-3 rounded-full bg-green-500/80"></span>
+                <span class="text-xs text-gray-500 font-mono ml-2">Speak2Compose Workstation (qbasic-terminal)</span>
             </div>
             <!-- Interactive graphic simulating the QBasic editor -->
-            <div class="bg-[#0000a8] font-mono text-white p-6 md:p-10 border-2 border-white rounded shadow-inner min-h-[300px] flex flex-col justify-between">
+            <div class="bg-[#0000a8] font-mono text-white p-8 md:p-12 border border-white/20 rounded shadow-inner min-h-[320px] flex flex-col justify-between">
                 <div>
-                    <div class="text-center border-b border-white pb-2 mb-4 text-sm font-bold">◄■► Untitled ◄■►</div>
+                    <div class="text-center border-b border-white/10 pb-2 mb-6 text-sm font-bold">◄■► Strudel Workspace ◄■►</div>
                     <div class="text-neonGreen font-semibold text-lg animate-pulse mb-6">// Real-time Strudel Javascript Code Output</div>
                     <pre class="text-base leading-relaxed text-gray-200">
 stack(
@@ -102,7 +114,7 @@ stack(
   note("c3 e3 g3 b3").s("sawtooth").gain(0.6).delay(0.4)
 )</pre>
                 </div>
-                <div class="flex justify-between text-xs text-black bg-gray-300 p-1 px-4 mt-6">
+                <div class="flex justify-between text-xs text-black bg-gray-300 p-1.5 px-4 mt-8">
                     <span>&lt;F1=Help&gt; &lt;Enter=Execute&gt; &lt;Caps=Off&gt;</span>
                     <span>Strudel Synthesizer Active</span>
                 </div>
@@ -110,99 +122,99 @@ stack(
         </div>
     </section>
 
-    <!-- The Inspiration Story -->
-    <section id="inspiration" class="py-24 border-t border-gray-900 bg-slateCard/10 px-6">
+    <!-- Design Philosophy / Inspiration -->
+    <section id="inspiration" class="py-28 border-t border-white/5 bg-white/[0.01] px-6">
         <div class="max-w-4xl mx-auto">
-            <h2 class="text-3xl md:text-4xl font-display font-bold mb-8 text-center text-neonBlue">
-                The Inspiration: Building for Michael
+            <h2 class="text-3xl md:text-4xl font-display font-bold mb-10 text-center bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
+                Design Philosophy: Conversational Interfaces
             </h2>
-            <div class="space-y-6 text-lg text-gray-400 font-light leading-relaxed">
+            <div class="space-y-6 text-base text-gray-400 font-light leading-relaxed">
                 <p>
-                    It started as a simple wish. I wanted my son, Michael—a sophomore in high school—to experience the pure joy of computer-generated music composition. But standard code editors, syntax rules, and live-coding systems like Strudel can have steep learning curves for beginners.
+                    Live-coding music environments offer tremendous creative power, but their syntax rules can act as barriers to immediate expression. Speak2Compose changes this dynamic by translating natural speech into structured code on the fly.
                 </p>
                 <p>
-                    I asked: *What if he could conduct a band just by speaking to it?* What if saying <span class="text-neonGreen">"Give me a bass drum"</span> instantly started a loop, and saying <span class="text-neonGreen">"Make it faster"</span> or <span class="text-neonGreen">"Drop the bass"</span> triggered transitions in real time, with the system writing clean code behind the scenes?
+                    The layout draws inspiration from the text-adventures of the 80s and 90s, where players navigated complex worlds using simple verbs and nouns. By mapping basic English statements like <span class="text-neonGreen">"give me a bass drum"</span> or <span class="text-neonGreen">"make it faster"</span> directly to underlying Web Audio nodes and Strudel algorithms, the workstation lets anyone conduct electronic music in real time.
                 </p>
                 <p>
-                    Inspired by the classic text-adventure games of the 80s and 90s, where a limited vocabulary of verbs and nouns felt like complete creative freedom, we designed **Speak2Compose**. Michael can speak to a retro animated Clippy, and the system compiles his English commands into a valid Strudel script, ready to be copy-pasted directly into production tools.
+                    Every command spoken compiles instantly into copy-pasteable Strudel script inside a retro QBasic terminal. This bridge between speech and code demystifies programmatic composition and lets users learn synth routing patterns organically.
                 </p>
             </div>
         </div>
     </section>
 
     <!-- Feature Pillars -->
-    <section class="py-20 border-t border-gray-900 px-6">
+    <section class="py-24 border-t border-white/5 px-6">
         <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
-            <div class="border border-gray-800 p-8 bg-slateCard/30 rounded-lg hover:border-neonGreen/40 transition-colors">
+            <div class="glass-card p-8 rounded-xl hover:border-neonGreen/30 transition-all duration-300">
                 <i class="ph ph-microphone text-4xl text-neonGreen mb-6"></i>
-                <h3 class="text-xl font-bold mb-4 font-display">Conversational Speech Parser</h3>
-                <p class="text-gray-400 font-light">
-                    Supports natural phrase mapping. Chain commands with "and" or "then" to construct multi-instrument sequences in a single breath.
+                <h3 class="text-xl font-bold mb-4 font-display">Chained Phrase Parser</h3>
+                <p class="text-gray-400 font-light text-sm leading-relaxed">
+                    Supports compound sentence structures. Connect speech phrases using "and" or "then" to construct or modify multiple tracks in one command.
                 </p>
             </div>
-            <div class="border border-gray-800 p-8 bg-slateCard/30 rounded-lg hover:border-neonBlue/40 transition-colors">
+            <div class="glass-card p-8 rounded-xl hover:border-neonBlue/30 transition-all duration-300">
                 <i class="ph ph-spell-check text-4xl text-neonBlue mb-6"></i>
-                <h3 class="text-xl font-bold mb-4 font-display">Fuzzy Typo Tolerant Search</h3>
-                <p class="text-gray-400 font-light">
-                    Built-in Levenshtein Distance algorithm maps misheard words or speech slip-ups to the nearest musical command automatically.
+                <h3 class="text-xl font-bold mb-4 font-display">Fuzzy Alignment Search</h3>
+                <p class="text-gray-400 font-light text-sm leading-relaxed">
+                    Underpinned by a Levenshtein Distance algorithm that aligns misheard words or approximate speech inputs to the nearest valid synthesizer action.
                 </p>
             </div>
-            <div class="border border-gray-800 p-8 bg-slateCard/30 rounded-lg hover:border-neonGreen/40 transition-colors">
+            <div class="glass-card p-8 rounded-xl hover:border-neonGreen/30 transition-all duration-300">
                 <i class="ph ph-music-notes text-4xl text-neonGreen mb-6"></i>
-                <h3 class="text-xl font-bold mb-4 font-display">Strudel Code Output</h3>
-                <p class="text-gray-400 font-light">
-                    The QBasic IDE displays standard Javascript-based Strudel syntax. Highlight, copy, and paste directly into the main Strudel REPL.
+                <h3 class="text-xl font-bold mb-4 font-display">Strudel Script Output</h3>
+                <p class="text-gray-400 font-light text-sm leading-relaxed">
+                    Compiles directly into clean Javascript-based Strudel syntax. Highlight, edit, and paste directly into the main Strudel REPL.
                 </p>
             </div>
         </div>
     </section>
 
     <!-- Documentation Section -->
-    <section id="documentation" class="py-24 border-t border-gray-900 bg-slateCard/10 px-6">
+    <section id="documentation" class="py-28 border-t border-white/5 bg-white/[0.01] px-6">
         <div class="max-w-4xl mx-auto">
-            <h2 class="text-4xl font-display font-bold text-center mb-12">
-                Michael's Voice Command Spellbook
+            <h2 class="text-4xl font-display font-bold text-center mb-16 bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
+                Voice Command Spellbook
             </h2>
             
             <div class="space-y-8">
                 <!-- Drum Vocab -->
-                <div class="border border-gray-800 bg-slateCard/20 p-6 rounded-lg">
+                <div class="glass-card p-8 rounded-xl">
                     <h3 class="text-xl font-bold mb-4 text-neonGreen font-display flex items-center gap-2">
                         <i class="ph-bold ph-speaker-hifi"></i> Rhythmic Beats
                     </h3>
                     <ul class="space-y-3 font-mono text-sm">
-                        <li><span class="text-white font-bold">"give me a bass drum"</span> or <span class="text-white font-bold">"add a kick"</span> -> adds 4/4 bass drum loop</li>
-                        <li><span class="text-white font-bold">"add a snare"</span> -> schedules snare hits on beats 2 & 4</li>
-                        <li><span class="text-white font-bold">"give me hi hats"</span> -> starts active eighth-note hi-hat patterns</li>
-                        <li><span class="text-white font-bold">"add a clap"</span> -> triggers synthetic claps</li>
+                        <li><span class="text-neonBlue font-semibold">"give me a bass drum"</span> or <span class="text-white font-semibold">"add a kick"</span> &rarr; s("kick*4")</li>
+                        <li><span class="text-neonBlue font-semibold">"add a snare"</span> &rarr; s("~ snare")</li>
+                        <li><span class="text-neonBlue font-semibold">"give me hi hats"</span> &rarr; s("hat*8")</li>
+                        <li><span class="text-neonBlue font-semibold">"add a clap"</span> &rarr; s("~ clap")</li>
                     </ul>
                 </div>
 
                 <!-- Instruments -->
-                <div class="border border-gray-800 bg-slateCard/20 p-6 rounded-lg">
+                <div class="glass-card p-8 rounded-xl">
                     <h3 class="text-xl font-bold mb-4 text-neonBlue font-display flex items-center gap-2">
-                        <i class="ph-bold ph-piano"></i> Melodic Synthesizers
+                        <i class="ph-bold ph-piano"></i> Instruments
                     </h3>
                     <ul class="space-y-3 font-mono text-sm">
-                        <li><span class="text-white font-bold">"give me a bass line"</span> -> plays pumping sub bass riffs</li>
-                        <li><span class="text-white font-bold">"add a synth"</span> or <span class="text-white font-bold">"play notes"</span> -> starts a bright lead melody</li>
-                        <li><span class="text-white font-bold">"play chords"</span> -> triggers atmospheric background synthesizer pads</li>
-                        <li><span class="text-white font-bold">"ring bells"</span> -> adds chime accents</li>
-                        <li><span class="text-white font-bold">"play strings"</span> -> layers soft string sweeps</li>
+                        <li><span class="text-neonGreen font-semibold">"give me a bass line"</span> &rarr; plays sub-bass arpeggios</li>
+                        <li><span class="text-neonGreen font-semibold">"add a synth"</span> or <span class="text-white font-semibold">"play notes"</span> &rarr; triggers lead line</li>
+                        <li><span class="text-neonGreen font-semibold">"play chords"</span> &rarr; plays atmospheric chord pads</li>
+                        <li><span class="text-neonGreen font-semibold">"ring bells"</span> &rarr; triggers chime notes</li>
+                        <li><span class="text-neonGreen font-semibold">"play strings"</span> &rarr; layers analog string sweeps</li>
                     </ul>
                 </div>
 
                 <!-- DJ Performance Controls -->
-                <div class="border border-gray-800 bg-slateCard/20 p-6 rounded-lg">
+                <div class="glass-card p-8 rounded-xl">
                     <h3 class="text-xl font-bold mb-4 text-neonGreen font-display flex items-center gap-2">
-                        <i class="ph-bold ph-music-notes-simple"></i> DJ Performance flourishes
+                        <i class="ph-bold ph-music-notes-simple"></i> DJ Modifiers & Sweeps
                     </h3>
                     <ul class="space-y-3 font-mono text-sm">
-                        <li><span class="text-white font-bold">"drop the bass"</span> -> boosts kick gain and plays sub-frequency drop</li>
-                        <li><span class="text-white font-bold">"build the drums"</span> -> plays a rapid 8-step snare roll riser</li>
-                        <li><span class="text-white font-bold">"filter sweep"</span> -> performs highpass frequency filter modulation</li>
-                        <li><span class="text-white font-bold">"make it faster"</span> / <span class="text-white font-bold">"slow it down"</span> -> adjusts tempo by 15 BPM</li>
-                        <li><span class="text-white font-bold">"add echo"</span> -> adds stereo delay echo filters</li>
+                        <li><span class="text-neonBlue font-semibold">"drop the bass"</span> &rarr; increases kick gain and plays low sweep</li>
+                        <li><span class="text-neonBlue font-semibold">"build the drums"</span> &rarr; triggers snare roll riser</li>
+                        <li><span class="text-neonBlue font-semibold">"filter sweep"</span> &rarr; modulates highpass frequency filter</li>
+                        <li><span class="text-neonBlue font-semibold">"make it faster" / "slow it down"</span> &rarr; changes BPM</li>
+                        <li><span class="text-neonBlue font-semibold">"add echo"</span> &rarr; enables stereo delays</li>
                     </ul>
                 </div>
             </div>
@@ -210,13 +222,13 @@ stack(
     </section>
 
     <!-- Footer CTA -->
-    <footer class="py-20 border-t border-gray-900 text-center px-6">
+    <footer class="py-24 border-t border-white/5 text-center px-6">
         <h2 class="text-3xl md:text-4xl font-display font-bold mb-8">Ready to compose?</h2>
-        <a href="app.html" class="bg-neonGreen text-black hover:bg-green-400 px-10 py-5 font-bold text-xl transition-all shadow-[0_0_25px_rgba(57,255,20,0.4)]">
+        <a href="app.html" class="bg-neonGreen text-black hover:bg-green-400 px-10 py-5 font-bold text-lg rounded transition-all duration-300 shadow-[0_0_30px_rgba(57,255,20,0.3)]">
             Open Workstation
         </a>
         <p class="text-sm text-gray-600 mt-12">
-            &copy; 2026 Speak2Compose. Built with ♥️ for Michael.
+            &copy; 2026 Speak2Compose. Built with ♥️.
         </p>
     </footer>
 

@@ -87,7 +87,7 @@ function toggleWebamp() {
         initialTracks: [
             {
                 metaData: {
-                    title: "Michael's Strudel Live Loop",
+                    title: "Strudel Live Loop",
                     artist: "Speak2Compose"
                 },
                 url: "data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAIlYAAESsAAACABAAZGF0YQAAAAA=" // Silent stub
@@ -148,7 +148,7 @@ function initClippyAgent() {
             });
 
             agent.speak("Welcome to Speak2Compose! Click me and say your commands to start coding.");
-        });
+        }, null, 'https://cdn.jsdelivr.net/gh/smore-inc/clippy.js@master/src/agents/');
     }
 }
 
@@ -303,11 +303,11 @@ function findFuzzyMatch(phrase) {
 // ==========================================
 function executeIndividualCommand(phrase) {
     const genre = GenrePacks[activeGenre];
-    
-    // Perform fuzzy alignment
     const matchedTokens = findFuzzyMatch(phrase);
+    const hasDrum = phrase.includes('drum') || matchedTokens.includes('kick');
+    const hasBass = phrase.includes('bass') || phrase.includes('bas') || matchedTokens.includes('bass');
 
-    if (matchedTokens.includes('kick') || phrase.includes('bass drum')) {
+    if (matchedTokens.includes('kick') || (hasBass && hasDrum)) {
         genre.enabled.kick = true;
     }
     if (matchedTokens.includes('snare')) {
@@ -319,9 +319,10 @@ function executeIndividualCommand(phrase) {
     if (matchedTokens.includes('clap')) {
         genre.enabled.clap = true;
     }
-    if (matchedTokens.includes('bass')) {
+    if (matchedTokens.includes('bass') && !phrase.includes('drum')) {
         genre.enabled.bass = true;
     }
+
     if (matchedTokens.includes('synth') || matchedTokens.includes('melody') || phrase.includes('notes')) {
         genre.enabled.synth = true;
     }
@@ -801,28 +802,30 @@ function setupWindowListeners() {
         });
     });
 }
-
 function runDiagnosticTestSuite() {
     const editor = document.getElementById('qbasic-editor-content');
     let output = "=== RUNNING SPEAK2COMPOSE DIAGNOSTIC TESTS ===\n\n";
     
-    // Test 1: Fuzzy Matching
-    const fuzzyResult1 = findFuzzyMatch("drum bas");
-    const test1Passed = fuzzyResult1.includes("kick");
+    // Test 1: Fuzzy Matching and Action Alignment
+    const genre = GenrePacks[activeGenre];
+    genre.enabled.kick = false;
+    executeIndividualCommand("drum bas");
+    const test1Passed = genre.enabled.kick;
     output += `[${test1Passed ? "PASS" : "FAIL"}] Test 1: Fuzzy Match ("drum bas" -> "kick")\n`;
     
     // Test 2: Multi-Phrase Command Parsing
-    const genre = GenrePacks[activeGenre];
+    genre.enabled.kick = false;
+    genre.enabled.snare = false;
     executeIndividualCommand("add kick and add snare");
     const test2Passed = genre.enabled.kick && genre.enabled.snare;
     output += `[${test2Passed ? "PASS" : "FAIL"}] Test 2: Chained Commands ("add kick and add snare")\n`;
-    
+
     // Test 3: Mixer volume boundaries
     MixerChannels.kick.volume = 0.5;
     executeIndividualCommand("crank up kick");
     const test3Passed = MixerChannels.kick.volume > 0.5;
     output += `[${test3Passed ? "PASS" : "FAIL"}] Test 3: Mixer Volume Modifiers ("crank up kick")\n`;
-    
+
     // Test 4: Strudel compiler syntax verification
     updateQBasicDisplay();
     const currentCode = editor.innerText;
