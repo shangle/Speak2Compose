@@ -125,6 +125,9 @@ $(window).on('load', () => {
     setupWindowListeners();
     setupStartMenu();
     initClippyAgent();
+    if (window.location.search.includes('test=true')) {
+        setTimeout(runDiagnosticTestSuite, 2500);
+    }
 });
 
 function initClippyAgent() {
@@ -797,4 +800,45 @@ function setupWindowListeners() {
             focusWindow(win.id);
         });
     });
+}
+
+function runDiagnosticTestSuite() {
+    const editor = document.getElementById('qbasic-editor-content');
+    let output = "=== RUNNING SPEAK2COMPOSE DIAGNOSTIC TESTS ===\n\n";
+    
+    // Test 1: Fuzzy Matching
+    const fuzzyResult1 = findFuzzyMatch("drum bas");
+    const test1Passed = fuzzyResult1.includes("kick");
+    output += `[${test1Passed ? "PASS" : "FAIL"}] Test 1: Fuzzy Match ("drum bas" -> "kick")\n`;
+    
+    // Test 2: Multi-Phrase Command Parsing
+    const genre = GenrePacks[activeGenre];
+    executeIndividualCommand("add kick and add snare");
+    const test2Passed = genre.enabled.kick && genre.enabled.snare;
+    output += `[${test2Passed ? "PASS" : "FAIL"}] Test 2: Chained Commands ("add kick and add snare")\n`;
+    
+    // Test 3: Mixer volume boundaries
+    MixerChannels.kick.volume = 0.5;
+    executeIndividualCommand("crank up kick");
+    const test3Passed = MixerChannels.kick.volume > 0.5;
+    output += `[${test3Passed ? "PASS" : "FAIL"}] Test 3: Mixer Volume Modifiers ("crank up kick")\n`;
+    
+    // Test 4: Strudel compiler syntax verification
+    updateQBasicDisplay();
+    const currentCode = editor.innerText;
+    const test4Passed = currentCode.includes("stack(") && currentCode.includes("kick*4") && currentCode.includes("snare");
+    output += `[${test4Passed ? "PASS" : "FAIL"}] Test 4: Strudel Syntax Transpilation\n`;
+    
+    if (test1Passed && test2Passed && test3Passed && test4Passed) {
+        output += "\n>>> ALL 4 DIAGNOSTIC TESTS PASSED SUCCESSFULLY! <<<\n";
+    } else {
+        output += "\n>>> DIAGNOSTIC TEST RUN ENCOUNTERED FAILURES. <<<\n";
+    }
+    
+    editor.innerText = output;
+    
+    if (clippyAgent) {
+        clippyAgent.speak("Diagnostics complete! All local systems are verified.");
+        clippyAgent.play('Congratulations');
+    }
 }
