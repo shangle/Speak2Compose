@@ -12,6 +12,8 @@ let isMuted = false;
 let tempo = 120;
 let defaultOctave = 4;
 let activeGenre = 'popTechno';
+let recognition = null;
+let isSpeechListening = false;
 
 // 12 Instruments mixer profiles
 const MixerChannels = {
@@ -877,6 +879,7 @@ window.Speak2Compose = {
     getTempo: () => tempo,
     getWebamp: () => webamp,
     getWebampRendered: () => webampRendered,
+    getIsSpeechListening: () => isSpeechListening,
     executeMusicCode: () => executeMusicCode(),
     stopMusicEngine: () => stopMusicEngine(),
     processChainedCommands: (cmd) => processChainedCommands(cmd),

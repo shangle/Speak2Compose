@@ -51,6 +51,29 @@ server.listen(9000, async () => {
       console.log(`[NETWORK ERROR] Request failed: ${req.url()} - Error: ${req.failure() ? req.failure().errorText : 'Unknown'}`);
     });
     
+    // Mock SpeechRecognition API to support testing voice record triggering
+    await page.addInitScript(() => {
+      class MockSpeechRecognition {
+        constructor() {
+          this.continuous = false;
+          this.lang = 'en-US';
+          this.interimResults = false;
+        }
+        start() {
+          setTimeout(() => {
+            if (this.onstart) this.onstart();
+          }, 50);
+        }
+        stop() {
+          setTimeout(() => {
+            if (this.onend) this.onend();
+          }, 50);
+        }
+      }
+      window.SpeechRecognition = MockSpeechRecognition;
+      window.webkitSpeechRecognition = MockSpeechRecognition;
+    });
+    
     console.log('Loading local application via HTTP server...');
     await page.goto('http://localhost:9000/app.html');
     
@@ -74,6 +97,17 @@ server.listen(9000, async () => {
       .catch(() => false);
     console.log(`[TEST] Clippy Agent DOM element visible: ${clippyAgentVisible ? 'PASS' : 'FAIL'}`);
     if (!clippyAgentVisible) throw new Error('Clippy Agent DOM element not visible');
+
+    // 3b. Test clicking on Clippy to trigger speech recording
+    console.log('Testing click interaction on Clippy to start speech recording...');
+    await page.click('.clippy');
+    await page.waitForTimeout(500);
+    const isListening = await page.evaluate(() => window.Speak2Compose.getIsSpeechListening());
+    const trayText = await page.innerText('#mic-status');
+    console.log(`[TEST] Clippy click starts speech recording: ${isListening ? 'PASS' : 'FAIL'} (Tray: ${trayText})`);
+    if (!isListening || !trayText.includes('Listening')) {
+      throw new Error('Clicking Clippy did not activate speech recognition state');
+    }
 
     // 4. Verify z-index for Webamp overlay styles
     const webampZIndex = await page.evaluate(() => {
